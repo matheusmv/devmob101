@@ -1,5 +1,7 @@
 import { View } from 'react-native';
 
+import { useNavigation } from '@react-navigation/native';
+
 import { useLogin } from '../hooks/useLogin';
 
 import { ContainerPlugin, TitleLogin } from '../styles/login.style';
@@ -8,6 +10,8 @@ import Input from '../../../shared/components/input/Input';
 import Button from '../../../shared/components/button/Button';
 
 function Login() {
+  const doNavigation = useNavigation();
+
   const { email, password, handleOnPress, handleOnChangeEmail, handleOnChangePassword } =
     useLogin();
 
@@ -22,7 +26,14 @@ function Login() {
           margin="10px"
           onChange={handleOnChangePassword}
         />
-        <Button title="ENTRAR" margin="10px" onPress={handleOnPress} />
+        <Button
+          title="ENTRAR"
+          margin="10px"
+          onPress={() => {
+            handleOnPress();
+            doNavigation.navigate('Home');
+          }}
+        />
       </ContainerPlugin>
     </View>
   );

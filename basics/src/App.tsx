@@ -1,12 +1,7 @@
-import { SafeAreaView } from 'react-native';
-import Login from './modules/login';
+import Routes from './routes';
 
 function App() {
-  return (
-    <SafeAreaView>
-      <Login />
-    </SafeAreaView>
-  );
+  return <Routes />;
 }
 
 export default App;
