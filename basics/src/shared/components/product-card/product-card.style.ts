@@ -25,7 +25,6 @@ export const ProductCardDescription = styled.Text`
   font-size: 10px;
   color: #888c8c;
   text-align: justify;
-  text-overflow: ellipsis;
   margin-bottom: 5px;
 `;
 

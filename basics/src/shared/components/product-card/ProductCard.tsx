@@ -1,4 +1,4 @@
-import { TouchableOpacityProps } from 'react-native';
+import { ImageProps, TouchableOpacityProps } from 'react-native';
 import { CardContainer } from '../card/card.style';
 import {
   Favorite,
@@ -13,7 +13,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 type ProductCardProps = TouchableOpacityProps & {
-  image: any;
+  image: ImageProps['source'];
   title: string;
   description: string;
   price: string;

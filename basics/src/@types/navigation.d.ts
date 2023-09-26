@@ -4,6 +4,7 @@ export declare global {
       Home: undefined;
       Profile: undefined;
       Shop: undefined;
+      Cart: undefined;
     }
   }
 }

@@ -1,10 +1,10 @@
-import { FlatList, SafeAreaView, View } from 'react-native';
+import { FlatList, ImageProps, SafeAreaView, View } from 'react-native';
 import ProductCard from '../../../shared/components/product-card/ProductCard';
 import { useNavigation } from '@react-navigation/native';
 
 type ProductInfo = {
   id: string;
-  image: string;
+  image: ImageProps['source'];
   name: string;
   description: string;
   price: string;

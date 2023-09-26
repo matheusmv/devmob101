@@ -1,4 +1,5 @@
-import { ImageBackground, TouchableOpacity, View, Text } from 'react-native';
+import { ImageBackground, TouchableOpacity, View, Text, ImageProps } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
@@ -6,7 +7,7 @@ import { styles } from '../styles/shop.style';
 
 type SelectedProduct = {
   id: string;
-  image: any;
+  image: ImageProps['source'];
   name: string;
   description: string;
   price: string;
@@ -26,16 +27,17 @@ const productInfo: SelectedProduct = {
 };
 
 function Shop() {
+  const doNavigation = useNavigation();
+
   return (
     <View style={styles.conteiner}>
       <ImageBackground style={styles.header} source={productInfo.image} imageStyle={styles.img}>
         <View style={styles.row}>
           <TouchableOpacity style={styles.buttomHeader}>
-            <Icon name="arrow-left" size={23} />
+            <Icon name="arrow-left" size={23} onPress={() => doNavigation.goBack()} />
           </TouchableOpacity>
-
           <TouchableOpacity style={styles.buttomHeader}>
-            <Icon name="arrow-right" size={23} />
+            <Icon name="shopping-cart" size={23} onPress={() => doNavigation.navigate('Cart')} />
           </TouchableOpacity>
         </View>
       </ImageBackground>

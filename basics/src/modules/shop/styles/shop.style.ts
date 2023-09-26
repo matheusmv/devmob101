@@ -25,7 +25,6 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginHorizontal: 5,
-    marginVertical: 75,
   },
   buttomHeader: {
     backgroundColor: '#fff',
