@@ -85,14 +85,15 @@ function renderCartItems(items: Product[]): React.JSX.Element {
 function Cart() {
   const doNavigation = useNavigation();
 
-  const getTotal = (items: Product[]): number => {
+  const getTotal = (items: Product[]): string => {
     return items
       .map((item) => {
         const [type, value] = item.price.split(' ');
         return type === 'R$' ? value.replace(',', '.') : value;
       })
       .map((priceStr) => Number(priceStr))
-      .reduce((total, amount) => total + amount, 0.0);
+      .reduce((total, amount) => total + amount, 0.0)
+      .toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   };
 
   return (
@@ -112,7 +113,7 @@ function Cart() {
         <View style={styles.footerContent}>
           <View style={styles.footerHeader}>
             <Text style={styles.footerTitle}>Valor total</Text>
-            <Text style={styles.totalCart}>{`R$ ${getTotal(cartItems).toFixed(2)}`}</Text>
+            <Text style={styles.totalCart}>{`R$ ${getTotal(cartItems)}`}</Text>
           </View>
           <TouchableOpacity style={styles.btnConfirmation}>
             <Text style={styles.bntConfirmationText}>FINALIZAR PEDIDO</Text>

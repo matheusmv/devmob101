@@ -1,11 +1,11 @@
 import { NavigationContainer } from '@react-navigation/native';
 
-import CustomNavigationStack from './Stack.routes';
+import CustomStackNavigatior from './Stack.routes';
 
 function Routes() {
   return (
     <NavigationContainer>
-      <CustomNavigationStack />
+      <CustomStackNavigatior />
     </NavigationContainer>
   );
 }

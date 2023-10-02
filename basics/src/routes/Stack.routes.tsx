@@ -7,7 +7,7 @@ import Cart from '../modules/cart';
 
 const { Navigator, Screen } = createStackNavigator();
 
-function CustomNavigationStack() {
+function CustomStackNavigatior() {
   return (
     <Navigator screenOptions={{ headerShown: false }}>
       <Screen name="Login" component={Login} />
@@ -18,4 +18,4 @@ function CustomNavigationStack() {
   );
 }
 
-export default CustomNavigationStack;
+export default CustomStackNavigatior;

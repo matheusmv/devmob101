@@ -1,43 +1,30 @@
-import { ImageBackground, TouchableOpacity, View, Text, ImageProps } from 'react-native';
+import { ImageBackground, TouchableOpacity, View, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import { styles } from '../styles/shop.style';
+import { useEffect, useState } from 'react';
+import { ProductInfo, getProductById } from '../../../store/db';
 
-type SelectedProduct = {
-  id: string;
-  image: ImageProps['source'];
-  name: string;
-  description: string;
-  price: string;
-  offer: string;
-  inOffer: boolean;
-};
-
-const productInfo: SelectedProduct = {
-  id: '10',
-  image: require('../../../assets/images/berserk-vol-10.jpg'),
-  name: 'Berserk Vol. 10',
-  description:
-    'Após descobrir que seus antigos companheiros do Bando do Falcão Branco sofreram uma emboscada e os remanescentes estão sendo caçados, Guts volta para auxiliá-los e descobre um importante plano em andamento...',
-  price: 'R$ 34,90',
-  offer: '',
-  inOffer: false,
-};
-
-function Shop() {
-  const doNavigation = useNavigation();
+function renderProductInfo(
+  productInfo: ProductInfo | null,
+  goBack: () => void,
+  navigate: (module: string) => void,
+): React.JSX.Element {
+  if (!productInfo) {
+    return <Text>Produto indisponível</Text>;
+  }
 
   return (
-    <View style={styles.conteiner}>
+    <>
       <ImageBackground style={styles.header} source={productInfo.image} imageStyle={styles.img}>
         <View style={styles.row}>
           <TouchableOpacity style={styles.buttomHeader}>
-            <Icon name="arrow-left" size={23} onPress={() => doNavigation.goBack()} />
+            <Icon name="arrow-left" size={23} onPress={() => goBack()} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.buttomHeader}>
-            <Icon name="shopping-cart" size={23} onPress={() => doNavigation.navigate('Cart')} />
+            <Icon name="shopping-cart" size={23} onPress={() => navigate('Cart')} />
           </TouchableOpacity>
         </View>
       </ImageBackground>
@@ -69,6 +56,24 @@ function Shop() {
           <Text style={styles.btnCardText}>Adicionar ao carrinho</Text>
         </TouchableOpacity>
       </View>
+    </>
+  );
+}
+
+function Shop() {
+  const [productInfo, setProductInfo] = useState<ProductInfo | null>(null);
+
+  const doNavigation = useNavigation();
+
+  useEffect(() => {
+    getProductById('1')
+      .then(setProductInfo)
+      .catch((err: Error) => console.error(err.message));
+  }, []);
+
+  return (
+    <View style={styles.conteiner}>
+      {renderProductInfo(productInfo, doNavigation.goBack, doNavigation.navigate)}
     </View>
   );
 }
