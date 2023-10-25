@@ -1,8 +1,12 @@
-import { FlatList, SafeAreaView, View } from 'react-native';
+import { FlatList, SafeAreaView } from 'react-native';
 import ProductCard from '../../../shared/components/product-card/ProductCard';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
-import { ProductInfo, getAllProducts } from '../../../store/db';
+import { ProductInfo, getAllProducts } from '../../../api/db';
+import { SeparatorView } from '../../../shared/components/separator/separator.style';
+import Header from '../../../shared/components/header/Header';
+
+const separator = () => <SeparatorView />;
 
 function Home() {
   const [listOfProducts, setListOfProducts] = useState<Array<ProductInfo>>([]);
@@ -15,8 +19,9 @@ function Home() {
 
   return (
     <SafeAreaView>
+      <Header />
       <FlatList
-        ItemSeparatorComponent={() => <View style={{ backgroundColor: '#888c8c', height: 1 }} />}
+        ItemSeparatorComponent={separator}
         data={listOfProducts}
         renderItem={({ item }) => (
           <ProductCard

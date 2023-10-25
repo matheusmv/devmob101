@@ -29,9 +29,10 @@ function Login() {
         <Button
           title="ENTRAR"
           margin="10px"
-          onPress={() => {
-            handleOnPress();
-            doNavigation.navigate('Home');
+          onPress={async () => {
+            await handleOnPress(() => {
+              doNavigation.reset({ routes: [{ name: 'Home' }] });
+            });
           }}
         />
       </ContainerPlugin>

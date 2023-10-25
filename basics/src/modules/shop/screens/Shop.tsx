@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import { styles } from '../styles/shop.style';
 import { useEffect, useState } from 'react';
-import { ProductInfo, getProductById } from '../../../store/db';
+import { ProductInfo, getProductById } from '../../../api/db';
 
 function renderProductInfo(
   productInfo: ProductInfo | null,

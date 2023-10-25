@@ -12,6 +12,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import { styles } from '../styles/cart.style';
+import { SeparatorView } from '../../../shared/components/separator/separator.style';
 
 type Product = {
   id: string;
@@ -51,7 +52,7 @@ function renderCartItems(items: Product[]): React.JSX.Element {
 
   return (
     <FlatList
-      ItemSeparatorComponent={() => <View style={styles.divider} />}
+      ItemSeparatorComponent={() => <SeparatorView style={styles.divider} />}
       data={items}
       renderItem={({ item }) => (
         <View style={styles.productCardContainer}>
