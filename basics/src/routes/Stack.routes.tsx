@@ -5,6 +5,7 @@ import Home from '../modules/home';
 import Shop from '../modules/shop';
 import Cart from '../modules/cart';
 import Profile from '../modules/profile';
+import ProductRegistration from '../modules/product-registration';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -16,6 +17,7 @@ function CustomStackNavigatior() {
       <Screen name="Shop" component={Shop} />
       <Screen name="Cart" component={Cart} />
       <Screen name="Profile" component={Profile} />
+      <Screen name="ProductRegistration" component={ProductRegistration} />
     </Navigator>
   );
 }

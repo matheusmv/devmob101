@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { GRAY_MEDIUM, SECONDARY } from '../../styles/colors';
+import { BLACK, SECONDARY } from '../../styles/colors';
 
 type InputContainerProps = {
   margin?: string;
@@ -11,7 +11,7 @@ export const ContainerInput = styled.TextInput<InputContainerProps>`
   height: 48px;
   padding: 16px;
   background-color: ${SECONDARY};
-  color: ${GRAY_MEDIUM};
+  color: ${BLACK};
   border-radius: 4px;
 
   ${(props) => (props.margin ? `margin: ${props.margin};` : '')}

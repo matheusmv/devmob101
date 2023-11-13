@@ -3,9 +3,9 @@ import { ReactNode } from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'; // Substitua pelo ícone desejado
 
-function onRout(routeName: string, If: () => ReactNode, Else: () => ReactNode) {
+function onRout(routeName: string[], If: () => ReactNode, Else: () => ReactNode) {
   return (currentRoute: string) => {
-    if (currentRoute === routeName) {
+    if (routeName.includes(currentRoute)) {
       return If();
     } else {
       return Else();
@@ -18,7 +18,7 @@ function Header() {
   const doNavigation = useNavigation();
 
   const leftIcon = onRout(
-    'Home',
+    ['Home'],
     () => {
       return (
         <TouchableOpacity style={styles.leftIcon}>
@@ -36,13 +36,20 @@ function Header() {
   );
 
   const rightIcon = onRout(
-    'Profile',
+    ['Profile', 'ProductRegistration'],
     () => {
       return null;
     },
     () => {
       return (
         <>
+          <TouchableOpacity
+            style={styles.rightIcon}
+            onPress={() => doNavigation.navigate('ProductRegistration')}
+          >
+            <Icon name="plus" size={24} color="#333" />
+          </TouchableOpacity>
+
           <TouchableOpacity style={styles.rightIcon} onPress={() => doNavigation.navigate('Cart')}>
             <Icon name="shopping-cart" size={24} color="#333" />
           </TouchableOpacity>
