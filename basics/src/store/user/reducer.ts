@@ -9,10 +9,12 @@ export type UserProfile = {
 };
 
 export type UserDetails = {
+  accessToken?: string;
   user?: UserProfile;
 };
 
 const userState: UserDetails = {
+  accessToken: undefined,
   user: undefined,
 };
 

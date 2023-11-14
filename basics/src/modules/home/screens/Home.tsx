@@ -1,10 +1,12 @@
-import { FlatList, SafeAreaView } from 'react-native';
-import ProductCard from '../../../shared/components/product-card/ProductCard';
-import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { FlatList, SafeAreaView, StyleSheet } from 'react-native';
+
 import { ProductInfo, getAllProducts } from '../../../api/db';
 import { SeparatorView } from '../../../shared/components/separator/separator.style';
+
 import Header from '../../../shared/components/header/Header';
+import ProductCard from '../../../shared/components/product-card/ProductCard';
 
 const separator = () => <SeparatorView />;
 
@@ -18,7 +20,7 @@ function Home() {
   }, []);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <Header />
       <FlatList
         ItemSeparatorComponent={separator}
@@ -38,5 +40,11 @@ function Home() {
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    height: '100%',
+  },
+});
 
 export default Home;

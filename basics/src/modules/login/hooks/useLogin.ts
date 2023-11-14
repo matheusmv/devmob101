@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { NativeSyntheticEvent, TextInputFocusEventData } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { authUser } from '../../../store/user/reducer';
+import { setItemStorage } from '../../../shared/auth/storage.proxy';
+import { AUTORIZATION_KEY } from '../../../shared/auth/authorization.constant';
 
 export function useLogin() {
   const dispatch = useDispatch();
@@ -17,13 +19,17 @@ export function useLogin() {
     //     password,
     //   })
     //   .then((res) => {
+    //     setItemStorage(AUTORIZATION_KEY, res.data?.accessToken);
     //     dispatch(authUser(res.data));
     //     onSuccess();
     //   })
     //   .catch((err) => console.error(err));
 
+    setItemStorage(AUTORIZATION_KEY, 'sdlandsaldn.asndsandlaknd.ndalsdnlkasnf');
+
     dispatch(
       authUser({
+        accessToken: 'sdlandsaldn.asndsandlaknd.ndalsdnlkasnf',
         user: {
           id: 1,
           cpf: '99977755566',
