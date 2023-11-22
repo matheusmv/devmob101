@@ -54,12 +54,12 @@ export function useProductRegistration() {
 
     // await axios
     //   .post(
-    //     'http:192.168.137.49:8080/product',
+    //     'http://192.168.137.49:8080/product',
     //     {
     //       name: productName,
-    //       price: productPrice,
+    //       price: parseFloat(productPrice),
     //       image: productImage,
-    //       category: selectedCategory?.id,
+    //       categoryId: selectedCategory?.id,
     //     },
     //     {
     //       headers: {

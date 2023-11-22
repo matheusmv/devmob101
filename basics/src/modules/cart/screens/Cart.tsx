@@ -1,47 +1,23 @@
 import { useNavigation } from '@react-navigation/native';
-import {
-  FlatList,
-  Image,
-  ImageProps,
-  SafeAreaView,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { FlatList, Image, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import { styles } from '../styles/cart.style';
 import { SeparatorView } from '../../../shared/components/separator/separator.style';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootReducer } from '../../../store';
+import { ProductInfo } from '../../../api/db';
+import Button from '../../../shared/components/button/Button';
+import { ShopCart, addProduct, removeProduct } from '../../../store/cart/reducer';
+import { prettyPrice } from '../../../shared/fmt/currency';
 
-type Product = {
-  id: string;
-  name: string;
-  description: string;
-  image: ImageProps['source'];
-  price: string;
-};
-
-const cartItems: Product[] = [
-  {
-    id: '1',
-    name: 'Berserk Vol. 1',
-    description:
-      'O misterioso Guts, o "Espadachim Negro", carrega em sua mão mecânica uma enorme espada, e em seu pescoço uma estranha marca que atrai forças demoníacas. Em sua busca por vingança contra um antigo inimigo, nem tudo sai a seu favor, e ele recebe ajuda de uma fantástica criatura.',
-    image: require('../../../assets/images/berserk-vol-1.jpg'),
-    price: 'R$ 24,90',
-  },
-  {
-    id: '10',
-    name: 'Berserk Vol. 10',
-    description:
-      'Após descobrir que seus antigos companheiros do Bando do Falcão Branco sofreram uma emboscada e os remanescentes estão sendo caçados, Guts volta para auxiliá-los e descobre um importante plano em andamento...',
-    image: require('../../../assets/images/berserk-vol-10.jpg'),
-    price: 'R$ 34,90',
-  },
-];
-
-function renderCartItems(items: Product[]): React.JSX.Element {
+function renderCartItems(
+  items: ShopCart['products'],
+  addOne: (p: ProductInfo) => void,
+  remOne: (p: ProductInfo) => void,
+  remove: (p: ProductInfo) => void,
+): React.JSX.Element {
   if (items.length <= 0) {
     return (
       <View style={styles.emptyContainer}>
@@ -56,23 +32,29 @@ function renderCartItems(items: Product[]): React.JSX.Element {
       data={items}
       renderItem={({ item }) => (
         <View style={styles.productCardContainer}>
-          <Image style={styles.imageProduct} source={item.image} />
+          <Image style={styles.imageProduct} source={item.product.image} />
           <View style={styles.productDetails}>
             <View style={styles.productTitleContainer}>
-              <Text style={styles.productTitle}>{item.name}</Text>
-              <Text style={styles.productPrice}>{item.price}</Text>
+              <Text style={styles.productTitle}>{item.product.name}</Text>
+              <Text style={styles.productPrice}>{`R$ ${prettyPrice(
+                item.product.price,
+                'pt-BR',
+              )}`}</Text>
             </View>
             <View style={styles.actions}>
               <View style={styles.counter}>
-                <TouchableOpacity style={styles.decrementButton}>
+                <TouchableOpacity
+                  style={styles.decrementButton}
+                  onPress={() => remOne(item.product)}
+                >
                   <Icon name="minus" size={10} color="#0f1111" />
                 </TouchableOpacity>
-                <Text>1</Text>
-                <TouchableOpacity style={styles.addButton}>
+                <Text>{item.quantity}</Text>
+                <TouchableOpacity style={styles.addButton} onPress={() => addOne(item.product)}>
                   <Icon name="plus" size={10} color="#fff" />
                 </TouchableOpacity>
               </View>
-              <TouchableOpacity style={styles.trashButton}>
+              <TouchableOpacity style={styles.trashButton} onPress={() => remove(item.product)}>
                 <Icon name="trash" size={14} color={'#b60404'} />
               </TouchableOpacity>
             </View>
@@ -84,17 +66,22 @@ function renderCartItems(items: Product[]): React.JSX.Element {
 }
 
 function Cart() {
+  const { products, totalPrice } = useSelector((state: RootReducer) => state.cartReducer);
+
   const doNavigation = useNavigation();
 
-  const getTotal = (items: Product[]): string => {
-    return items
-      .map((item) => {
-        const [type, value] = item.price.split(' ');
-        return type === 'R$' ? value.replace(',', '.') : value;
-      })
-      .map((priceStr) => Number(priceStr))
-      .reduce((total, amount) => total + amount, 0.0)
-      .toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const dispatch = useDispatch();
+
+  const addOne = (product: ProductInfo) => {
+    dispatch(addProduct({ product, quantity: 1 }));
+  };
+
+  const remOne = (product: ProductInfo) => {
+    dispatch(addProduct({ product, quantity: -1 }));
+  };
+
+  const remove = (product: ProductInfo) => {
+    dispatch(removeProduct(product));
   };
 
   return (
@@ -107,18 +94,21 @@ function Cart() {
               <Icon name="arrow-left" size={23} />
             </TouchableOpacity>
           </View>
-          <View style={styles.body}>{renderCartItems(cartItems)}</View>
+          <View style={styles.body}>{renderCartItems(products, addOne, remOne, remove)}</View>
         </View>
       </SafeAreaView>
       <View style={styles.footer}>
         <View style={styles.footerContent}>
           <View style={styles.footerHeader}>
             <Text style={styles.footerTitle}>Valor total</Text>
-            <Text style={styles.totalCart}>{`R$ ${getTotal(cartItems)}`}</Text>
+            <Text style={styles.totalCart}>{`R$ ${prettyPrice(totalPrice, 'pt-BR')}`}</Text>
           </View>
-          <TouchableOpacity style={styles.btnConfirmation}>
-            <Text style={styles.bntConfirmationText}>FINALIZAR PEDIDO</Text>
-          </TouchableOpacity>
+          <Button
+            title="FINALIZAR PEDIDO"
+            onPress={async () => {
+              console.log(totalPrice);
+            }}
+          />
         </View>
       </View>
     </>

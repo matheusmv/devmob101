@@ -7,6 +7,7 @@ import { SeparatorView } from '../../../shared/components/separator/separator.st
 
 import Header from '../../../shared/components/header/Header';
 import ProductCard from '../../../shared/components/product-card/ProductCard';
+import { prettyPrice } from '../../../shared/fmt/currency';
 
 const separator = () => <SeparatorView />;
 
@@ -30,10 +31,10 @@ function Home() {
             image={item.image}
             title={item.name}
             description={item.description}
-            price={item.price}
-            offer={item.offer}
+            price={`R$ ${prettyPrice(item.price, 'pt-BR')}`}
+            offer={item.offer ? `R$ ${prettyPrice(item.offer, 'pt-BR')}` : ''}
             inOffer={item.inOffer}
-            onPress={() => doNavigation.navigate('Shop')}
+            onPress={() => doNavigation.navigate('Shop', { id: item.id })}
           />
         )}
       />
