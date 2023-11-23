@@ -32,7 +32,10 @@ function renderCartItems(
       data={items}
       renderItem={({ item }) => (
         <View style={styles.productCardContainer}>
-          <Image style={styles.imageProduct} source={item.product.image} />
+          <Image
+            style={styles.imageProduct}
+            source={require('../../../assets/images/image_not_found.png')}
+          />
           <View style={styles.productDetails}>
             <View style={styles.productTitleContainer}>
               <Text style={styles.productTitle}>{item.product.name}</Text>

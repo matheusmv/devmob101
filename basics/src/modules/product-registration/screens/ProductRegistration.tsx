@@ -1,4 +1,4 @@
-import { View, StyleSheet, TextInput } from 'react-native';
+import { View, StyleSheet, TextInput, SafeAreaView } from 'react-native';
 
 import { Picker } from '@react-native-picker/picker';
 
@@ -24,9 +24,9 @@ function ProductRegistration() {
   const doNavigation = useNavigation();
 
   return (
-    <>
+    <SafeAreaView style={styles.container}>
       <Header />
-      <View style={styles.container}>
+      <View style={styles.form}>
         <TextInput
           style={styles.input}
           placeholder="Nome do Produto"
@@ -56,21 +56,26 @@ function ProductRegistration() {
             <Picker.Item key={category.id} label={category.name} value={category} />
           ))}
         </Picker>
-        <Button
-          title="Cadastrar Produto"
-          margin="10px"
-          onPress={async () => {
-            await submitProductRegistration(() => doNavigation.navigate('Home'));
-          }}
-        />
       </View>
-    </>
+      <Button
+        title="Cadastrar Produto"
+        onPress={async () => {
+          await submitProductRegistration(() => doNavigation.navigate('Home'));
+        }}
+      />
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    padding: 10,
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  form: {
+    width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
     padding: 16,

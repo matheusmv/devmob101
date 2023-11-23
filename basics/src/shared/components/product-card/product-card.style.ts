@@ -13,6 +13,7 @@ export const ProductCardContent = styled.View`
 `;
 
 export const ProductCardTitle = styled.Text`
+  width: 170px;
   color: #0f1111;
   font-size: 20px;
   font-weight: 600;

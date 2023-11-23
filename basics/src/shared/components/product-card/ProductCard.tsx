@@ -1,4 +1,4 @@
-import { ImageProps, TouchableOpacityProps } from 'react-native';
+import { ImageSourcePropType, TouchableOpacityProps } from 'react-native';
 import { CardContainer } from '../card/card.style';
 import {
   Favorite,
@@ -13,12 +13,16 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 type ProductCardProps = TouchableOpacityProps & {
-  image: ImageProps['source'];
+  image: string;
   title: string;
   description: string;
   price: string;
   offer: string;
   inOffer: boolean;
+};
+
+const getImage = (img: string): ImageSourcePropType => {
+  return require('../../../assets/images/image_not_found.png');
 };
 
 function ProductCard({
@@ -32,7 +36,7 @@ function ProductCard({
 }: ProductCardProps) {
   return (
     <CardContainer {...props}>
-      <ProductCardImage source={image} />
+      <ProductCardImage source={getImage(image)} />
       <ProductCardContent>
         <ProductCardTitle>{title}</ProductCardTitle>
         <ProductCardDescription>{description}</ProductCardDescription>

@@ -6,13 +6,17 @@ import Shop from '../modules/shop';
 import Cart from '../modules/cart';
 import Profile from '../modules/profile';
 import ProductRegistration from '../modules/product-registration';
+import CreateAccount from '../modules/create-account';
+import Main from '../modules/main';
 
 const { Navigator, Screen } = createStackNavigator();
 
 function CustomStackNavigatior() {
   return (
     <Navigator screenOptions={{ headerShown: false }}>
+      <Screen name="Main" component={Main} />
       <Screen name="Login" component={Login} />
+      <Screen name="CreateAccount" component={CreateAccount} />
       <Screen name="Home" component={Home} />
       <Screen name="Shop" component={Shop} />
       <Screen name="Cart" component={Cart} />

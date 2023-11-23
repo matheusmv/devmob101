@@ -1,20 +1,12 @@
-// import axios from 'axios';
 import { useCallback, useEffect, useState } from 'react';
 import { NativeSyntheticEvent, TextInputFocusEventData } from 'react-native';
-import { getItemStorage } from '../../../shared/auth/storage.proxy';
-import { AUTORIZATION_KEY } from '../../../shared/auth/authorization.constant';
+import { addProduct, getProductCategories } from '../../../api/vendas-online-backend';
 
 export type ProductCategory = {
   id: number;
   name: string;
+  amountProducts: number;
 };
-
-const listOfCategories: ProductCategory[] = [
-  { id: 1, name: 'Electronics' },
-  { id: 2, name: 'Clothing' },
-  { id: 3, name: 'Books' },
-  { id: 4, name: 'Toys' },
-];
 
 export function useProductRegistration() {
   const [productName, setProductName] = useState('');
@@ -39,54 +31,29 @@ export function useProductRegistration() {
     setSelectedCategory(sCategory);
   };
 
-  const fetchAllCategories = useCallback(async (): Promise<ProductCategory[]> => {
-    return new Promise((resolve) => {
-      resolve(listOfCategories);
-    });
+  const fetchAllCategories = useCallback(async () => {
+    await getProductCategories()
+      .then((res) => {
+        setCategories(res);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }, []);
 
   const submitProductRegistration = async (onSuccess: () => void) => {
-    const token = await getItemStorage(AUTORIZATION_KEY);
-
-    if (!token) {
-      return;
-    }
-
-    // await axios
-    //   .post(
-    //     'http://192.168.137.49:8080/product',
-    //     {
-    //       name: productName,
-    //       price: parseFloat(productPrice),
-    //       image: productImage,
-    //       categoryId: selectedCategory?.id,
-    //     },
-    //     {
-    //       headers: {
-    //         Authorization: token,
-    //         'Content-Type': 'application/json',
-    //       },
-    //     },
-    //   )
-    //   .then(() => onSuccess())
-    //   .catch((err) => console.error(err));
-
-    console.info({
+    await addProduct({
       name: productName,
-      price: productPrice,
+      price: parseFloat(productPrice),
       image: productImage,
-      catetory: selectedCategory?.id,
-    });
-
-    onSuccess();
+      categoryId: selectedCategory?.id!,
+    })
+      .then(() => onSuccess())
+      .catch((err) => console.error(err));
   };
 
   useEffect(() => {
-    (async () => {
-      await fetchAllCategories()
-        .then((res) => setCategories(res))
-        .catch((err) => console.error(err));
-    })();
+    fetchAllCategories();
   }, [fetchAllCategories]);
 
   return {

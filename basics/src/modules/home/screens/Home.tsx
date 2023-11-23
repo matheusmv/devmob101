@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { FlatList, SafeAreaView, StyleSheet } from 'react-native';
 
-import { ProductInfo, getAllProducts } from '../../../api/db';
 import { SeparatorView } from '../../../shared/components/separator/separator.style';
 
 import Header from '../../../shared/components/header/Header';
 import ProductCard from '../../../shared/components/product-card/ProductCard';
 import { prettyPrice } from '../../../shared/fmt/currency';
+import { ProductInfo, fetchAllProducts } from '../../../api/vendas-online-backend';
 
 const separator = () => <SeparatorView />;
 
@@ -17,8 +17,10 @@ function Home() {
   const doNavigation = useNavigation();
 
   useEffect(() => {
-    getAllProducts().then(setListOfProducts);
-  }, []);
+    fetchAllProducts()
+      .then(setListOfProducts)
+      .catch((err) => console.error(err));
+  }, [listOfProducts]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -30,10 +32,10 @@ function Home() {
           <ProductCard
             image={item.image}
             title={item.name}
-            description={item.description}
+            description={''}
             price={`R$ ${prettyPrice(item.price, 'pt-BR')}`}
-            offer={item.offer ? `R$ ${prettyPrice(item.offer, 'pt-BR')}` : ''}
-            inOffer={item.inOffer}
+            offer={''}
+            inOffer={false}
             onPress={() => doNavigation.navigate('Shop', { id: item.id })}
           />
         )}

@@ -3,6 +3,8 @@ import { ReactNode } from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Cart from '../cart/Cart';
+import { useSelector } from 'react-redux';
+import { RootReducer } from '../../../store';
 
 function onRout(routeName: string[], If: () => ReactNode, Else: () => ReactNode) {
   return (currentRoute: string) => {
@@ -14,9 +16,23 @@ function onRout(routeName: string[], If: () => ReactNode, Else: () => ReactNode)
   };
 }
 
+function productRegistration(isAdmin: boolean, navigate: () => void) {
+  if (!isAdmin) {
+    return null;
+  }
+
+  return (
+    <TouchableOpacity style={styles.rightIcon} onPress={navigate}>
+      <Icon name="plus" size={24} color="#333" />
+    </TouchableOpacity>
+  );
+}
+
 function Header() {
   const route = useRoute();
   const doNavigation = useNavigation();
+
+  const { admin } = useSelector((root: RootReducer) => root.userReducer);
 
   const leftIcon = onRout(
     ['Home'],
@@ -37,19 +53,14 @@ function Header() {
   );
 
   const rightIcon = onRout(
-    ['Profile', 'ProductRegistration'],
+    ['Login', 'CreateAccount', 'Profile', 'ProductRegistration'],
     () => {
       return null;
     },
     () => {
       return (
         <>
-          <TouchableOpacity
-            style={styles.rightIcon}
-            onPress={() => doNavigation.navigate('ProductRegistration')}
-          >
-            <Icon name="plus" size={24} color="#333" />
-          </TouchableOpacity>
+          {productRegistration(admin, () => doNavigation.navigate('ProductRegistration'))}
 
           <Cart
             style={styles.rightIcon}

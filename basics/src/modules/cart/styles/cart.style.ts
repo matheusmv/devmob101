@@ -60,6 +60,7 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   productTitle: {
+    width: 170,
     fontWeight: '400',
     color: '#272221',
   },

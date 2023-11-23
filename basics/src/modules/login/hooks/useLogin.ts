@@ -1,10 +1,13 @@
 import { useState } from 'react';
-// import axios from 'axios';
 import { NativeSyntheticEvent, TextInputFocusEventData } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { authUser } from '../../../store/user/reducer';
+import { adminRole, authUser } from '../../../store/user/reducer';
 import { setItemStorage } from '../../../shared/auth/storage.proxy';
 import { AUTORIZATION_KEY } from '../../../shared/auth/authorization.constant';
+import {
+  authenticateUser,
+  checkIfUserHasAdminPrivileges,
+} from '../../../api/vendas-online-backend';
 
 export function useLogin() {
   const dispatch = useDispatch();
@@ -13,33 +16,17 @@ export function useLogin() {
   const [password, setPassword] = useState('');
 
   const handleOnPress = async (onSuccess: () => void) => {
-    // await axios
-    //   .post('http:192.168.137.49:8080/auth', {
-    //     email,
-    //     password,
-    //   })
-    //   .then((res) => {
-    //     setItemStorage(AUTORIZATION_KEY, res.data?.accessToken);
-    //     dispatch(authUser(res.data));
-    //     onSuccess();
-    //   })
-    //   .catch((err) => console.error(err));
+    await authenticateUser(email, password)
+      .then(async (res) => {
+        setItemStorage(AUTORIZATION_KEY, res.accessToken || '');
+        dispatch(authUser(res));
 
-    setItemStorage(AUTORIZATION_KEY, 'sdlandsaldn.asndsandlaknd.ndalsdnlkasnf');
+        const isAdmin = await checkIfUserHasAdminPrivileges();
+        dispatch(adminRole(isAdmin));
 
-    dispatch(
-      authUser({
-        accessToken: 'sdlandsaldn.asndsandlaknd.ndalsdnlkasnf',
-        user: {
-          id: 1,
-          cpf: '99977755566',
-          email: 'john@email.com',
-          name: 'john',
-          phone: '88542324242',
-        },
-      }),
-    );
-    onSuccess();
+        onSuccess();
+      })
+      .catch((err) => console.error(err));
   };
 
   const handleOnChangeEmail = (event: NativeSyntheticEvent<TextInputFocusEventData>) => {

@@ -1,33 +1,57 @@
-import { SafeAreaView, StyleSheet } from 'react-native';
-
 import { useNavigation } from '@react-navigation/native';
 
-import { useLogin } from '../hooks/useLogin';
-
-import { ContainerPlugin, TitleLogin } from '../styles/login.style';
+import { ContainerPlugin, TitleLogin } from '../styles/create-account.style';
 
 import Input from '../../../shared/components/input/Input';
 import Button from '../../../shared/components/button/Button';
+import { useRegistration } from '../hooks/useRegistration';
 import Header from '../../../shared/components/header/Header';
+import { SafeAreaView, StyleSheet } from 'react-native';
 import { WHITE } from '../../../shared/styles/colors';
 
-function Login() {
+function CreateAccount() {
   const doNavigation = useNavigation();
 
-  const { email, password, handleOnPress, handleOnChangeEmail, handleOnChangePassword } =
-    useLogin();
+  const {
+    name,
+    email,
+    phone,
+    cpf,
+    password,
+    handleOnPress,
+    handleOnChangeName,
+    handleOnChangeEmail,
+    handleOnChangePhone,
+    handleOnChangeCpf,
+    handleOnChangePassword,
+  } = useRegistration();
 
   return (
     <SafeAreaView style={styles.container}>
       <Header />
       <ContainerPlugin>
-        <TitleLogin>Login</TitleLogin>
+        <TitleLogin>Nova Conta</TitleLogin>
+        <Input placeholder="Nome" value={name} margin="10px" onChange={handleOnChangeName} />
         <Input
           inputMode="email"
           placeholder="Email"
           value={email}
           margin="10px"
           onChange={handleOnChangeEmail}
+        />
+        <Input
+          inputMode="tel"
+          placeholder="Telefone"
+          value={phone}
+          margin="10px"
+          onChange={handleOnChangePhone}
+        />
+        <Input
+          inputMode="numeric"
+          placeholder="CPF"
+          value={cpf}
+          margin="10px"
+          onChange={handleOnChangeCpf}
         />
         <Input
           secureTextEntry={true}
@@ -37,11 +61,11 @@ function Login() {
           onChange={handleOnChangePassword}
         />
         <Button
-          title="ENTRAR"
+          title="Confirmar"
           margin="10px"
           onPress={async () => {
             await handleOnPress(() => {
-              doNavigation.reset({ routes: [{ name: 'Home' }] });
+              doNavigation.reset({ routes: [{ name: 'Main' }] });
             });
           }}
         />
@@ -60,4 +84,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Login;
+export default CreateAccount;

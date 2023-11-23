@@ -5,11 +5,12 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import { styles } from '../styles/shop.style';
 import { useEffect, useState } from 'react';
-import { ProductInfo, getProductById } from '../../../api/db';
 import { useDispatch } from 'react-redux';
 import { addProduct } from '../../../store/cart/reducer';
 import { prettyPrice } from '../../../shared/fmt/currency';
 import Cart from '../../../shared/components/cart/Cart';
+import { ProductInfo, fetchProductById } from '../../../api/vendas-online-backend';
+import Header from '../../../shared/components/header/Header';
 
 function renderProductInfo(
   productInfo: ProductInfo | null,
@@ -21,12 +22,23 @@ function renderProductInfo(
   submit: () => void,
 ): React.JSX.Element {
   if (!productInfo) {
-    return <Text>Produto indisponível</Text>;
+    return (
+      <>
+        <Header />
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <Text>Produto indisponível</Text>
+        </View>
+      </>
+    );
   }
 
   return (
     <>
-      <ImageBackground style={styles.header} source={productInfo.image} imageStyle={styles.img}>
+      <ImageBackground
+        style={styles.header}
+        source={require('../../../assets/images/image_not_found.png')}
+        imageStyle={styles.img}
+      >
         <View style={styles.row}>
           <TouchableOpacity style={styles.buttomHeader}>
             <Icon name="arrow-left" size={23} onPress={() => goBack()} />
@@ -56,7 +68,7 @@ function renderProductInfo(
           </View>
         </View>
         <Text style={styles.titleSubSection}>Descrição</Text>
-        <Text style={styles.description}>{productInfo.description}</Text>
+        <Text style={styles.description}>{''}</Text>
       </View>
 
       <View style={styles.footer}>
@@ -105,7 +117,7 @@ function Shop() {
   };
 
   useEffect(() => {
-    getProductById(id)
+    fetchProductById(id)
       .then(setProductInfo)
       .catch((err: Error) => console.error(err.message));
   }, [id]);
