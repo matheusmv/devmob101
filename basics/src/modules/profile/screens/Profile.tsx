@@ -6,7 +6,8 @@ import Button from '../../../shared/components/button/Button';
 import { useNavigation } from '@react-navigation/native';
 import { removeItemStorage } from '../../../shared/auth/storage.proxy';
 import { AUTORIZATION_KEY } from '../../../shared/auth/authorization.constant';
-import { clear } from '../../../store/user/reducer';
+import { clearUser } from '../../../store/user/reducer';
+import { clearCart } from '../../../store/cart/reducer';
 
 const formatCPF = (cpf: string) => {
   const cpfRegex = /^([\d]{3})([\d]{3})([\d]{3})([\d]{2})$/;
@@ -49,7 +50,8 @@ function Profile() {
         style={styles.logoutBtn}
         onPress={async () => {
           await removeItemStorage(AUTORIZATION_KEY);
-          dispatch(clear());
+          dispatch(clearUser());
+          dispatch(clearCart());
           doNavigation.reset({ routes: [{ name: 'Main' }] });
         }}
       />

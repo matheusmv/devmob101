@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { PRIMARY } from '../../../shared/styles/colors';
 
 export const styles = StyleSheet.create({
   container: {
@@ -100,7 +101,7 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   btnCard: {
-    backgroundColor: 'rgba(0,0,0,0.8)',
+    backgroundColor: PRIMARY,
     padding: 16,
     borderRadius: 12,
     alignItems: 'center',

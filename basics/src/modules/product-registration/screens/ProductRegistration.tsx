@@ -60,7 +60,7 @@ function ProductRegistration() {
       <Button
         title="Cadastrar Produto"
         onPress={async () => {
-          await submitProductRegistration(() => doNavigation.navigate('Home'));
+          await submitProductRegistration(() => doNavigation.navigate('HomeScreen'));
         }}
       />
     </SafeAreaView>

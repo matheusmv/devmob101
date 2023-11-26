@@ -21,7 +21,7 @@ function Main() {
         setLoading(false);
       } else {
         dispatch(setUser(user));
-        doNavigation.navigate('Home');
+        doNavigation.navigate('HomeScreen');
       }
     } catch (err) {
       console.error(err);

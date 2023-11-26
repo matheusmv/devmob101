@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { ProductInfo } from '../../api/db';
+import { ProductInfo } from '../../api/vendas-online-backend';
 
 export type ShopCart = {
   products: Array<{ product: ProductInfo; quantity: number }>;
@@ -34,9 +34,13 @@ const slice = createSlice({
       state.products = state.products.filter((p) => p.product.id !== action.payload.id);
       state.totalPrice = getTotalPrice(state.products);
     },
+    clearCart: (state) => {
+      state.products = [];
+      state.totalPrice = 0;
+    },
   },
 });
 
-export const { addProduct, removeProduct } = slice.actions;
+export const { addProduct, removeProduct, clearCart } = slice.actions;
 
 export default slice.reducer;

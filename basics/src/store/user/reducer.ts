@@ -34,13 +34,14 @@ const slice = createSlice({
     setUser: (state, action: PayloadAction<UserProfile>) => {
       state.user = action.payload;
     },
-    clear: (state) => {
+    clearUser: (state) => {
       state.accessToken = undefined;
       state.user = undefined;
+      state.admin = false;
     },
   },
 });
 
-export const { authUser, adminRole, setUser, clear } = slice.actions;
+export const { authUser, adminRole, setUser, clearUser } = slice.actions;
 
 export default slice.reducer;

@@ -4,7 +4,7 @@ export declare global {
       Main: undefined;
       Login: undefined;
       CreateAccount: undefined;
-      Home: undefined;
+      HomeScreen: undefined;
       Shop: { id: number };
       Cart: undefined;
       Profile: undefined;

@@ -41,7 +41,7 @@ function Login() {
           margin="10px"
           onPress={async () => {
             await handleOnPress(() => {
-              doNavigation.reset({ routes: [{ name: 'Home' }] });
+              doNavigation.reset({ routes: [{ name: 'HomeScreen' }] });
             });
           }}
         />

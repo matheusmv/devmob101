@@ -7,10 +7,10 @@ import { styles } from '../styles/cart.style';
 import { SeparatorView } from '../../../shared/components/separator/separator.style';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootReducer } from '../../../store';
-import { ProductInfo } from '../../../api/db';
 import Button from '../../../shared/components/button/Button';
 import { ShopCart, addProduct, removeProduct } from '../../../store/cart/reducer';
 import { prettyPrice } from '../../../shared/fmt/currency';
+import { ProductInfo } from '../../../api/vendas-online-backend';
 
 function renderCartItems(
   items: ShopCart['products'],

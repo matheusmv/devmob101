@@ -5,9 +5,10 @@ import { RootReducer } from '../../../store';
 import { ShopCart } from '../../../store/cart/reducer';
 import Text from '../text/Text';
 import { PRIMARY } from '../../styles/colors';
+import { useNavigation } from '@react-navigation/native';
 
 type CartProps = {
-  style: TouchableOpacityProps['style'];
+  style?: TouchableOpacityProps['style'];
   size: number;
   color?: string;
   onPress?: () => void;
@@ -20,8 +21,14 @@ const getNumberOfProducts = (products: ShopCart['products']): number => {
 function Cart({ style, size, color, onPress }: CartProps) {
   const { products } = useSelector((state: RootReducer) => state.cartReducer);
 
+  const doNavigation = useNavigation();
+
+  const defaultOnPress = () => {
+    doNavigation.navigate('Cart');
+  };
+
   return (
-    <TouchableOpacity style={style} onPress={onPress}>
+    <TouchableOpacity style={style} onPress={onPress || defaultOnPress}>
       <View style={styles.container}>
         <Icon name="shopping-cart" size={size} color={color} />
         {getNumberOfProducts(products) > 0 ? <Text style={styles.text}>{}</Text> : null}
