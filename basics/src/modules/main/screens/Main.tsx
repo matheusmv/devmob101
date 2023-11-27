@@ -4,8 +4,8 @@ import { useNavigation } from '@react-navigation/native';
 import { PRIMARY, WHITE } from '../../../shared/styles/colors';
 import { useDispatch } from 'react-redux';
 import { useCallback, useEffect, useState } from 'react';
-import { checkToken } from '../../../api/vendas-online-backend';
-import { setUser } from '../../../store/user/reducer';
+import { checkIfUserHasAdminPrivileges, checkToken } from '../../../api/vendas-online-backend';
+import { adminRole, setUser } from '../../../store/user/reducer';
 
 function Main() {
   const dispatch = useDispatch();
@@ -21,6 +21,10 @@ function Main() {
         setLoading(false);
       } else {
         dispatch(setUser(user));
+
+        const isAdmin = await checkIfUserHasAdminPrivileges();
+        dispatch(adminRole(isAdmin));
+
         doNavigation.navigate('HomeScreen');
       }
     } catch (err) {
