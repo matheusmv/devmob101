@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { PRIMARY } from '../../../shared/styles/colors';
+import { BLACK, PRIMARY } from '../../../shared/styles/colors';
 
 export const styles = StyleSheet.create({
   container: {
@@ -40,6 +40,7 @@ export const styles = StyleSheet.create({
   nameProduct: {
     fontWeight: 'bold',
     fontSize: 24,
+    color: BLACK,
   },
   rowBody: {
     flexDirection: 'row',
@@ -61,6 +62,7 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     minWidth: 25,
     textAlign: 'center',
+    color: BLACK,
   },
   btnIncrase: {
     borderRadius: 20,
@@ -76,6 +78,7 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 18,
     marginBottom: 8,
+    color: BLACK,
   },
   description: {
     textAlign: 'justify',
@@ -99,6 +102,7 @@ export const styles = StyleSheet.create({
   price: {
     fontSize: 22,
     fontWeight: 'bold',
+    color: BLACK,
   },
   btnCard: {
     backgroundColor: PRIMARY,

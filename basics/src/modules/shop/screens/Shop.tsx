@@ -11,6 +11,7 @@ import { prettyPrice } from '../../../shared/fmt/currency';
 import Cart from '../../../shared/components/cart/Cart';
 import { ProductInfo, fetchProductById } from '../../../api/vendas-online-backend';
 import Header from '../../../shared/components/header/Header';
+import { BLACK } from '../../../shared/styles/colors';
 
 function renderProductInfo(
   productInfo: ProductInfo | null,
@@ -41,16 +42,23 @@ function renderProductInfo(
       >
         <View style={styles.row}>
           <TouchableOpacity style={styles.buttomHeader}>
-            <Icon name="arrow-left" size={23} onPress={() => goBack()} />
+            <Icon name="arrow-left" size={23} color={BLACK} onPress={() => goBack()} />
           </TouchableOpacity>
-          <Cart style={styles.buttomHeader} size={23} onPress={() => navigate('Cart')} />
+          <Cart
+            style={styles.buttomHeader}
+            color={BLACK}
+            size={23}
+            onPress={() => navigate('Cart')}
+          />
         </View>
       </ImageBackground>
 
       <View style={styles.body}>
         <Text style={styles.nameProduct}>{productInfo.name}</Text>
         <View style={styles.rowBody}>
-          <Text style={styles.rate}>Quantidade</Text>
+          <Text style={styles.rate}>
+            4.7/5 <Icon name="star" size={16} color={'#ffa500'} />
+          </Text>
           <View style={styles.rowIncraseBtn}>
             <TouchableOpacity
               style={[styles.btnIncrase, { backgroundColor: 'rgba(0,0,0,0.1)' }]}

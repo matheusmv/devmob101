@@ -9,6 +9,42 @@ import Header from '../../../shared/components/header/Header';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import { WHITE } from '../../../shared/styles/colors';
 
+function parseAndPrettifyPhone(phone: string): string {
+  const phoneRegex = /(\d{2})(\d{0,5})(\d{0,})/;
+
+  let phoneGroup = phone.match(phoneRegex);
+
+  if (!phoneGroup) {
+    return phone;
+  }
+
+  let [_, ddd, p1, p2] = phoneGroup;
+
+  ddd = p1 ? `(${ddd})` : ddd;
+  ddd += p1 !== '' ? ` ${p1}` : p1;
+  ddd += p2 !== '' ? '-' + p2 : p2;
+
+  return ddd;
+}
+
+function parseAndPrettifyCPF(cpf: string): string {
+  const cpfRegex = /(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,})/;
+
+  let cpfGroup = cpf.match(cpfRegex);
+
+  if (!cpfGroup) {
+    return cpf;
+  }
+
+  let [_, s1, s2, s3, s4] = cpfGroup;
+
+  s1 += s2 ? '.' + s2 : s2;
+  s1 += s3 ? '.' + s3 : s3;
+  s1 += s4 ? '-' + s4 : s4;
+
+  return s1;
+}
+
 function CreateAccount() {
   const doNavigation = useNavigation();
 
@@ -42,14 +78,14 @@ function CreateAccount() {
         <Input
           inputMode="tel"
           placeholder="Telefone"
-          value={phone}
+          value={parseAndPrettifyPhone(phone)}
           margin="10px"
           onChange={handleOnChangePhone}
         />
         <Input
           inputMode="numeric"
           placeholder="CPF"
-          value={cpf}
+          value={parseAndPrettifyCPF(cpf)}
           margin="10px"
           onChange={handleOnChangeCpf}
         />

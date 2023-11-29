@@ -11,8 +11,7 @@ export function useRegistration() {
 
   const handleOnPress = async (onSuccess: () => void) => {
     await createAccount({ name, email, phone, cpf, password })
-      .then((user) => {
-        console.log(user);
+      .then(() => {
         onSuccess();
       })
       .catch((err) => console.error(err));
@@ -27,11 +26,11 @@ export function useRegistration() {
   };
 
   const handleOnChangePhone = (event: NativeSyntheticEvent<TextInputFocusEventData>) => {
-    setPhone(event.nativeEvent.text);
+    setPhone(event.nativeEvent.text.replaceAll(/[ ()-]/g, ''));
   };
 
   const handleOnChangeCpf = (event: NativeSyntheticEvent<TextInputFocusEventData>) => {
-    setCpf(event.nativeEvent.text);
+    setCpf(event.nativeEvent.text.replaceAll(/[-.]/g, ''));
   };
 
   const handleOnChangePassword = (event: NativeSyntheticEvent<TextInputFocusEventData>) => {

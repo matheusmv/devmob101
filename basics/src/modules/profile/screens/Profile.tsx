@@ -8,6 +8,7 @@ import { removeItemStorage } from '../../../shared/auth/storage.proxy';
 import { AUTORIZATION_KEY } from '../../../shared/auth/authorization.constant';
 import { clearUser } from '../../../store/user/reducer';
 import { clearCart } from '../../../store/cart/reducer';
+import { BLACK } from '../../../shared/styles/colors';
 
 const formatCPF = (cpf: string) => {
   const cpfRegex = /^([\d]{3})([\d]{3})([\d]{3})([\d]{2})$/;
@@ -73,6 +74,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   name: {
+    color: BLACK,
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 40,
@@ -80,6 +82,7 @@ const styles = StyleSheet.create({
     textTransform: 'capitalize',
   },
   info: {
+    color: BLACK,
     fontSize: 16,
     marginBottom: 5,
   },

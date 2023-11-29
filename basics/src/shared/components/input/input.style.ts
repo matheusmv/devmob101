@@ -13,6 +13,7 @@ export const ContainerInput = styled.TextInput<InputContainerProps>`
   background-color: ${SECONDARY};
   color: ${BLACK};
   border-radius: 4px;
+  font-size: 16px;
 
   ${(props) => (props.margin ? `margin: ${props.margin};` : '')}
 `;

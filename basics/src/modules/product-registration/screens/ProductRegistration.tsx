@@ -6,6 +6,7 @@ import Button from '../../../shared/components/button/Button';
 import Header from '../../../shared/components/header/Header';
 import { useProductRegistration } from '../hooks/useProductRegistration';
 import { useNavigation } from '@react-navigation/native';
+import { BLACK } from '../../../shared/styles/colors';
 
 function ProductRegistration() {
   const {
@@ -30,12 +31,14 @@ function ProductRegistration() {
         <TextInput
           style={styles.input}
           placeholder="Nome do Produto"
+          placeholderTextColor={BLACK}
           value={productName}
           onChange={handleOnChangeProductName}
         />
         <TextInput
           style={styles.input}
           placeholder="Preço do Produto"
+          placeholderTextColor={BLACK}
           value={productPrice}
           onChange={handleOnChangeProductPrice}
           keyboardType="numeric"
@@ -43,11 +46,13 @@ function ProductRegistration() {
         <TextInput
           style={styles.input}
           placeholder="URL da Imagem"
+          placeholderTextColor={BLACK}
           value={productImage}
           onChange={handleOnChangeProductImage}
         />
         <Picker
           style={styles.input}
+          dropdownIconColor={BLACK}
           selectedValue={selectedCategory}
           onValueChange={(value) => handleOnChangeProductCategory(value)}
         >
@@ -87,6 +92,8 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     paddingHorizontal: 8,
     width: '100%',
+    fontSize: 16,
+    color: BLACK,
   },
 });
 
