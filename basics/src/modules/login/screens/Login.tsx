@@ -14,7 +14,7 @@ import { WHITE } from '../../../shared/styles/colors';
 function Login() {
   const doNavigation = useNavigation();
 
-  const { email, password, handleOnPress, handleOnChangeEmail, handleOnChangePassword } =
+  const { credentials, handleOnChangeEmail, handleOnChangePassword, executeAuthentication } =
     useLogin();
 
   return (
@@ -25,14 +25,14 @@ function Login() {
         <Input
           inputMode="email"
           placeholder="Email"
-          value={email}
+          value={credentials.email}
           margin="10px"
           onChange={handleOnChangeEmail}
         />
         <Input
           secureTextEntry={true}
           placeholder="Senha"
-          value={password}
+          value={credentials.password}
           margin="10px"
           onChange={handleOnChangePassword}
         />
@@ -40,7 +40,7 @@ function Login() {
           title="ENTRAR"
           margin="10px"
           onPress={async () => {
-            await handleOnPress(() => {
+            await executeAuthentication(() => {
               doNavigation.reset({ routes: [{ name: 'HomeScreen' }] });
             });
           }}

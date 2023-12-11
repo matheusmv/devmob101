@@ -5,6 +5,7 @@ import { adminRole, authUser } from '../../../store/user/reducer';
 import { setItemStorage } from '../../../shared/auth/storage.proxy';
 import { AUTORIZATION_KEY } from '../../../shared/auth/authorization.constant';
 import {
+  AuthenticationCredentials,
   authenticateUser,
   checkIfUserHasAdminPrivileges,
 } from '../../../api/vendas-online-backend';
@@ -12,11 +13,21 @@ import {
 export function useLogin() {
   const dispatch = useDispatch();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [credentials, setCredentials] = useState<AuthenticationCredentials>({
+    email: '',
+    password: '',
+  });
 
-  const handleOnPress = async (onSuccess: () => void) => {
-    await authenticateUser(email, password)
+  const handleOnChangeEmail = (event: NativeSyntheticEvent<TextInputFocusEventData>) => {
+    setCredentials((state) => ({ ...state, email: event.nativeEvent.text }));
+  };
+
+  const handleOnChangePassword = (event: NativeSyntheticEvent<TextInputFocusEventData>) => {
+    setCredentials((state) => ({ ...state, password: event.nativeEvent.text }));
+  };
+
+  const executeAuthentication = async (onSuccess?: () => void) => {
+    await authenticateUser(credentials)
       .then(async (res) => {
         setItemStorage(AUTORIZATION_KEY, res.accessToken || '');
         dispatch(authUser(res));
@@ -24,24 +35,15 @@ export function useLogin() {
         const isAdmin = await checkIfUserHasAdminPrivileges();
         dispatch(adminRole(isAdmin));
 
-        onSuccess();
+        onSuccess?.();
       })
       .catch((err) => console.error(err));
   };
 
-  const handleOnChangeEmail = (event: NativeSyntheticEvent<TextInputFocusEventData>) => {
-    setEmail(event.nativeEvent.text);
-  };
-
-  const handleOnChangePassword = (event: NativeSyntheticEvent<TextInputFocusEventData>) => {
-    setPassword(event.nativeEvent.text);
-  };
-
   return {
-    email,
-    password,
-    handleOnPress,
+    credentials,
     handleOnChangeEmail,
     handleOnChangePassword,
+    executeAuthentication,
   };
 }

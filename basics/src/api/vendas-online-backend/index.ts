@@ -11,7 +11,15 @@ const api = axios.create({
   },
 });
 
-export async function authenticateUser(email: string, password: string): Promise<UserDetails> {
+export type AuthenticationCredentials = {
+  email: string;
+  password: string;
+};
+
+export async function authenticateUser({
+  email,
+  password,
+}: AuthenticationCredentials): Promise<UserDetails> {
   return api.post('/auth', { email, password }).then((res) => res.data);
 }
 
