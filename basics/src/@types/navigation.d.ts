@@ -9,7 +9,6 @@ export declare global {
       Cart: undefined;
       Profile: undefined;
       ProductRegistration: undefined;
-      Category: undefined;
     }
   }
 }
