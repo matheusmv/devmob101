@@ -27,7 +27,7 @@ export async function checkIfUserHasAdminPrivileges(): Promise<boolean> {
     .catch(() => false);
 }
 
-type AccountDetails = {
+export type AccountDetails = {
   name: string;
   email: string;
   phone: string;

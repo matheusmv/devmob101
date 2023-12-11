@@ -49,17 +49,13 @@ function CreateAccount() {
   const doNavigation = useNavigation();
 
   const {
-    name,
-    email,
-    phone,
-    cpf,
-    password,
-    handleOnPress,
+    userDetails,
     handleOnChangeName,
     handleOnChangeEmail,
     handleOnChangePhone,
     handleOnChangeCpf,
     handleOnChangePassword,
+    executeAccountCreation,
   } = useRegistration();
 
   return (
@@ -67,32 +63,37 @@ function CreateAccount() {
       <Header />
       <ContainerPlugin>
         <TitleLogin>Nova Conta</TitleLogin>
-        <Input placeholder="Nome" value={name} margin="10px" onChange={handleOnChangeName} />
+        <Input
+          placeholder="Nome"
+          value={userDetails.name}
+          margin="10px"
+          onChange={handleOnChangeName}
+        />
         <Input
           inputMode="email"
           placeholder="Email"
-          value={email}
+          value={userDetails.email}
           margin="10px"
           onChange={handleOnChangeEmail}
         />
         <Input
           inputMode="tel"
           placeholder="Telefone"
-          value={parseAndPrettifyPhone(phone)}
+          value={parseAndPrettifyPhone(userDetails.phone)}
           margin="10px"
           onChange={handleOnChangePhone}
         />
         <Input
           inputMode="numeric"
           placeholder="CPF"
-          value={parseAndPrettifyCPF(cpf)}
+          value={parseAndPrettifyCPF(userDetails.cpf)}
           margin="10px"
           onChange={handleOnChangeCpf}
         />
         <Input
           secureTextEntry={true}
           placeholder="Senha"
-          value={password}
+          value={userDetails.password}
           margin="10px"
           onChange={handleOnChangePassword}
         />
@@ -100,7 +101,7 @@ function CreateAccount() {
           title="Confirmar"
           margin="10px"
           onPress={async () => {
-            await handleOnPress(() => {
+            await executeAccountCreation(() => {
               doNavigation.reset({ routes: [{ name: 'Main' }] });
             });
           }}
