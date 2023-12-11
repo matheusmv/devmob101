@@ -8,27 +8,48 @@ export type ProductCategory = {
   amountProducts: number;
 };
 
+type NewProduct = {
+  name: string;
+  price: string;
+  image: string;
+  category: ProductCategory;
+};
+
 export function useProductRegistration() {
-  const [productName, setProductName] = useState('');
-  const [productPrice, setProductPrice] = useState('');
-  const [productImage, setProductImage] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<ProductCategory>();
   const [categories, setCategories] = useState<ProductCategory[]>([]);
 
+  const [productDetails, setProductDetails] = useState<NewProduct>({
+    name: '',
+    price: '',
+    image: '',
+    category: {
+      id: -1,
+      name: '',
+      amountProducts: -1,
+    },
+  });
+
+  const setValueOnState = <K extends keyof NewProduct, V extends NewProduct[K]>(
+    key: K,
+    value: V,
+  ): void => {
+    setProductDetails((state) => ({ ...state, [key]: value }));
+  };
+
   const handleOnChangeProductName = (event: NativeSyntheticEvent<TextInputFocusEventData>) => {
-    setProductName(event.nativeEvent.text);
+    setValueOnState('name', event.nativeEvent.text);
   };
 
   const handleOnChangeProductPrice = (event: NativeSyntheticEvent<TextInputFocusEventData>) => {
-    setProductPrice(event.nativeEvent.text);
+    setValueOnState('price', event.nativeEvent.text);
   };
 
   const handleOnChangeProductImage = (event: NativeSyntheticEvent<TextInputFocusEventData>) => {
-    setProductImage(event.nativeEvent.text);
+    setValueOnState('image', event.nativeEvent.text);
   };
 
   const handleOnChangeProductCategory = (sCategory: ProductCategory) => {
-    setSelectedCategory(sCategory);
+    setValueOnState('category', sCategory);
   };
 
   const fetchAllCategories = useCallback(async () => {
@@ -41,14 +62,14 @@ export function useProductRegistration() {
       });
   }, []);
 
-  const submitProductRegistration = async (onSuccess: () => void) => {
+  const submitProductRegistration = async (onSuccess?: () => void) => {
     await addProduct({
-      name: productName,
-      price: parseFloat(productPrice),
-      image: productImage,
-      categoryId: selectedCategory?.id!,
+      name: productDetails.name,
+      price: parseFloat(productDetails.price),
+      image: productDetails.image,
+      categoryId: productDetails.category.id,
     })
-      .then(() => onSuccess())
+      .then(() => onSuccess?.())
       .catch((err) => console.error(err));
   };
 
@@ -57,10 +78,7 @@ export function useProductRegistration() {
   }, [fetchAllCategories]);
 
   return {
-    productName,
-    productPrice,
-    productImage,
-    selectedCategory,
+    productDetails,
     categories,
     handleOnChangeProductName,
     handleOnChangeProductPrice,

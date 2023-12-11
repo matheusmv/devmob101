@@ -10,10 +10,7 @@ import { BLACK } from '../../../shared/styles/colors';
 
 function ProductRegistration() {
   const {
-    productName,
-    productPrice,
-    productImage,
-    selectedCategory,
+    productDetails,
     categories,
     handleOnChangeProductName,
     handleOnChangeProductPrice,
@@ -32,14 +29,14 @@ function ProductRegistration() {
           style={styles.input}
           placeholder="Nome do Produto"
           placeholderTextColor={BLACK}
-          value={productName}
+          value={productDetails.name}
           onChange={handleOnChangeProductName}
         />
         <TextInput
           style={styles.input}
           placeholder="Preço do Produto"
           placeholderTextColor={BLACK}
-          value={productPrice}
+          value={productDetails.price}
           onChange={handleOnChangeProductPrice}
           keyboardType="numeric"
         />
@@ -47,13 +44,13 @@ function ProductRegistration() {
           style={styles.input}
           placeholder="URL da Imagem"
           placeholderTextColor={BLACK}
-          value={productImage}
+          value={productDetails.image}
           onChange={handleOnChangeProductImage}
         />
         <Picker
           style={styles.input}
           dropdownIconColor={BLACK}
-          selectedValue={selectedCategory}
+          selectedValue={productDetails.category}
           onValueChange={(value) => handleOnChangeProductCategory(value)}
         >
           <Picker.Item label="Selecione a Categoria" value="" />

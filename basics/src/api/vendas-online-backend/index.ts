@@ -74,7 +74,7 @@ export async function getProductCategories(): Promise<ProductCategory[]> {
     .then((res) => res.data);
 }
 
-type ProductRegistrationDetails = {
+export type ProductRegistrationDetails = {
   name: string;
   price: number;
   image: string;
