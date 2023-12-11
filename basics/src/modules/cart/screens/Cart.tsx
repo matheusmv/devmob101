@@ -52,7 +52,7 @@ function renderCartItems(
                 >
                   <Icon name="minus" size={10} color="#0f1111" />
                 </TouchableOpacity>
-                <Text style={styles.totalCart}>{item.quantity}</Text>
+                <Text style={styles.productQuantity}>{item.quantity}</Text>
                 <TouchableOpacity style={styles.addButton} onPress={() => addOne(item.product)}>
                   <Icon name="plus" size={10} color="#fff" />
                 </TouchableOpacity>

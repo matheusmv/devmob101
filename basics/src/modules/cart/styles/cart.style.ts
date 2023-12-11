@@ -126,6 +126,11 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     color: '#403937',
   },
+  productQuantity: {
+    fontWeight: 'normal',
+    fontSize: 16,
+    color: '#403937',
+  },
   btnConfirmation: {
     width: '100%',
     paddingVertical: 12,
