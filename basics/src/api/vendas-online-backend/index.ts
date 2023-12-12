@@ -1,11 +1,19 @@
 import axios from 'axios';
 import { UserDetails, UserProfile } from '../../store/user/reducer';
 import { getItemStorage, removeItemStorage } from '../../shared/auth/storage.proxy';
-import { AUTORIZATION_KEY } from '../../shared/auth/authorization.constant';
+import { API_ADDRESS, AUTORIZATION_KEY } from '../../shared/auth/authorization.constant';
 import { ProductCategory } from '../../modules/product-registration/hooks/useProductRegistration';
 
+export const DEFAULT_API_ADDRESS = 'http://192.168.100.70:8080';
+
+(async () => {
+  await getItemStorage(API_ADDRESS).then((address) => {
+    api.defaults.baseURL = address || DEFAULT_API_ADDRESS;
+  });
+})();
+
 const api = axios.create({
-  baseURL: 'http://192.168.100.70:8080',
+  baseURL: DEFAULT_API_ADDRESS,
   headers: {
     'Content-Type': 'application/json',
   },

@@ -6,13 +6,19 @@ import { useDispatch } from 'react-redux';
 import { useCallback, useEffect, useState } from 'react';
 import { checkIfUserHasAdminPrivileges, checkToken } from '../../../api/vendas-online-backend';
 import { adminRole, setUser } from '../../../store/user/reducer';
+import Input from '../../../shared/components/input/Input';
+import { useApi } from '../hooks/useApi';
+import RNRestart from 'react-native-restart';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 function Main() {
   const dispatch = useDispatch();
-
   const doNavigation = useNavigation();
 
   const [loading, setLoading] = useState(true);
+
+  const { apiUrl, changeApiUrl } = useApi();
 
   const checkUserToken = useCallback(async () => {
     try {
@@ -60,6 +66,17 @@ function Main() {
           doNavigation.navigate('CreateAccount');
         }}
       />
+      <View style={styles.apiConfig}>
+        <Input
+          style={styles.apiAddressInput}
+          inputMode="text"
+          value={apiUrl}
+          onChange={changeApiUrl}
+        />
+        <TouchableOpacity style={styles.appReloadButton}>
+          <Icon name="sync-alt" size={23} color={WHITE} onPress={() => RNRestart.Restart()} />
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }
@@ -76,6 +93,22 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  apiConfig: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  apiAddressInput: {
+    width: 320,
+  },
+  appReloadButton: {
+    backgroundColor: PRIMARY,
+    padding: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 8,
   },
 });
 
