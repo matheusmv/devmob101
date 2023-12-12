@@ -11,6 +11,7 @@ import Button from '../../../shared/components/button/Button';
 import { ShopCart, addProduct, removeProduct } from '../../../store/cart/reducer';
 import { prettyPrice } from '../../../shared/fmt/currency';
 import { ProductInfo } from '../../../api/vendas-online-backend';
+import { BLACK } from '../../../shared/styles/colors';
 
 function renderCartItems(
   items: ShopCart['products'],
@@ -94,7 +95,7 @@ function Cart() {
           <View style={styles.header}>
             <Text style={styles.headerTitle}>Carrinho</Text>
             <TouchableOpacity style={styles.backButton} onPress={() => doNavigation.goBack()}>
-              <Icon name="arrow-left" size={23} />
+              <Icon name="arrow-left" color={BLACK} size={23} />
             </TouchableOpacity>
           </View>
           <View style={styles.body}>{renderCartItems(products, addOne, remOne, remove)}</View>
